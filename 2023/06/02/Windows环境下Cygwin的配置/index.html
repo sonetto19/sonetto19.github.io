@@ -1,0 +1,177 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Windows环境下Cygwin的配置 | Hexo</title><meta name="author" content="Sonetto"><meta name="copyright" content="Sonetto"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="我太懒了最近换了台win11，装了Clion以后，实在不想配置wsl，但是MinGW的中文乱码问题又实在是恼火，之前试过Cygwin，感觉不太好用，但是这次感觉不错，所以记录下安装过程。 wsl我的感觉是启动慢，配置繁琐，但是他们始终是工具，顺手简单不折腾才是根本，Cygwin也不复杂，也不用装很多东西，目前为止很满意。 访问Cygwin官网，下载并安装    选择从互联网安装（下载的文件将保留以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows环境下Cygwin的配置">
+<meta property="og:url" content="https://sonetto19.github.io/2023/06/02/Windows%E7%8E%AF%E5%A2%83%E4%B8%8BCygwin%E7%9A%84%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="我太懒了最近换了台win11，装了Clion以后，实在不想配置wsl，但是MinGW的中文乱码问题又实在是恼火，之前试过Cygwin，感觉不太好用，但是这次感觉不错，所以记录下安装过程。 wsl我的感觉是启动慢，配置繁琐，但是他们始终是工具，顺手简单不折腾才是根本，Cygwin也不复杂，也不用装很多东西，目前为止很满意。 访问Cygwin官网，下载并安装    选择从互联网安装（下载的文件将保留以">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2023-06-02T10:44:55.000Z">
+<meta property="article:modified_time" content="2024-02-27T14:43:32.384Z">
+<meta property="article:author" content="Sonetto">
+<meta property="article:tag" content="疑难杂症">
+<meta property="article:tag" content="Clion">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://sonetto19.github.io/2023/06/02/Windows%E7%8E%AF%E5%A2%83%E4%B8%8BCygwin%E7%9A%84%E9%85%8D%E7%BD%AE/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Windows环境下Cygwin的配置',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-02-27 14:43:32'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.1.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><hr class="custom-hr"/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Hexo"><span class="site-name">Hexo</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Windows环境下Cygwin的配置</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-06-02T10:44:55.000Z" title="Created 2023-06-02 10:44:55">2023-06-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-02-27T14:43:32.384Z" title="Updated 2024-02-27 14:43:32">2024-02-27</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Windows环境下Cygwin的配置"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="我太懒了"><a href="#我太懒了" class="headerlink" title="我太懒了"></a>我太懒了</h1><p>最近换了台win11，装了Clion以后，实在不想配置wsl，但是MinGW的中文乱码问题又实在是恼火，之前试过Cygwin，感觉不太好用，但是这次感觉不错，所以记录下安装过程。</p>
+<p>wsl我的感觉是启动慢，配置繁琐，但是他们始终是工具，顺手简单不折腾才是根本，Cygwin也不复杂，也不用装很多东西，目前为止很满意。</p>
+<h1 id="访问Cygwin官网，下载并安装"><a href="#访问Cygwin官网，下载并安装" class="headerlink" title="访问Cygwin官网，下载并安装"></a>访问Cygwin官网，下载并安装</h1><img src="https://s2.loli.net/2023/06/02/IRQXAp4k1ryUeiL.png" alt="下载.png"  />
+
+<blockquote>
+<ol>
+<li>选择从互联网安装（下载的文件将保留以备将来重复使用）</li>
+<li>全部默认下一步</li>
+<li>使用系统代理设置，选择国内源快一点</li>
+<li>在选择包界面，安装以下包，在查看选择<code>完整</code>，处输入关键词，选择需要安装的软件包，选择版本号后，即可搜索下一个包，最后点击下一步时可以批量安装</li>
+</ol>
+<p><img src="https://s2.loli.net/2023/06/02/qr64dRNLB9lTPaM.png" alt="软件包.png"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gcc-core</span><br><span class="line">gcc-g++</span><br><span class="line">gdb</span><br><span class="line">make</span><br><span class="line">cmake</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h1 id="安装完成后，添加cygwin的环境变量"><a href="#安装完成后，添加cygwin的环境变量" class="headerlink" title="安装完成后，添加cygwin的环境变量"></a>安装完成后，添加cygwin的环境变量</h1><p><img src="https://s2.loli.net/2023/06/02/qeLfhkdYmizcV31.png" alt="环境变量.png"></p>
+<h1 id="CLion中配置Cygwin"><a href="#CLion中配置Cygwin" class="headerlink" title="CLion中配置Cygwin"></a>CLion中配置Cygwin</h1><p>clion中添加cygwin环境，这里注意</p>
+<blockquote>
+<p>CMake使用Cygwin版本的CMake，这里涉及到中文路径问题，全部设置完，设置Cygwin为default，完成即可</p>
+<p><img src="https://s2.loli.net/2023/06/02/bgTXFuvzqOwmRlP.png" alt="cmake.png"></p>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://sonetto19.github.io">Sonetto</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://sonetto19.github.io/2023/06/02/Windows%E7%8E%AF%E5%A2%83%E4%B8%8BCygwin%E7%9A%84%E9%85%8D%E7%BD%AE/">https://sonetto19.github.io/2023/06/02/Windows%E7%8E%AF%E5%A2%83%E4%B8%8BCygwin%E7%9A%84%E9%85%8D%E7%BD%AE/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%96%91%E9%9A%BE%E6%9D%82%E7%97%87/">疑难杂症</a><a class="post-meta__tags" href="/tags/Clion/">Clion</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/06/16/%E8%A7%A3%E5%86%B3ProxmoxVE%E6%97%A0%E6%B3%95%E5%AE%89%E8%A3%85%E5%88%B0eMMC%E4%B8%8A%E7%9A%84%E9%97%AE%E9%A2%98/" title="解决proxmoxVE无法安装到eMMC上的问题"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Previous</div><div class="prev_info">解决proxmoxVE无法安装到eMMC上的问题</div></div></a></div><div class="next-post pull-right"><a href="/2021/11/12/Clion%E4%BD%BF%E7%94%A8WSL%E7%BC%96%E5%86%99C%E8%AF%AD%E8%A8%80%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB/" title="Clion使用WSL编写C语言问题汇总"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next</div><div class="next_info">Clion使用WSL编写C语言问题汇总</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2021/11/12/Clion%E4%BD%BF%E7%94%A8WSL%E7%BC%96%E5%86%99C%E8%AF%AD%E8%A8%80%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB/" title="Clion使用WSL编写C语言问题汇总"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-12</div><div class="title">Clion使用WSL编写C语言问题汇总</div></div></a></div><div><a href="/2021/11/12/Windows%E7%8E%AF%E5%A2%83Clion%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81%E6%9C%80%E5%AE%8C%E7%BE%8E%E6%96%B9%E6%A1%88/" title="Windows环境Clion中文乱码最完美方案"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-12</div><div class="title">Windows环境Clion中文乱码最完美方案</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Sonetto</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%88%91%E5%A4%AA%E6%87%92%E4%BA%86"><span class="toc-number">1.</span> <span class="toc-text">我太懒了</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BF%E9%97%AECygwin%E5%AE%98%E7%BD%91%EF%BC%8C%E4%B8%8B%E8%BD%BD%E5%B9%B6%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">访问Cygwin官网，下载并安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E5%AE%8C%E6%88%90%E5%90%8E%EF%BC%8C%E6%B7%BB%E5%8A%A0cygwin%E7%9A%84%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">3.</span> <span class="toc-text">安装完成后，添加cygwin的环境变量</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CLion%E4%B8%AD%E9%85%8D%E7%BD%AECygwin"><span class="toc-number">4.</span> <span class="toc-text">CLion中配置Cygwin</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/16/%E8%A7%A3%E5%86%B3ProxmoxVE%E6%97%A0%E6%B3%95%E5%AE%89%E8%A3%85%E5%88%B0eMMC%E4%B8%8A%E7%9A%84%E9%97%AE%E9%A2%98/" title="解决proxmoxVE无法安装到eMMC上的问题">解决proxmoxVE无法安装到eMMC上的问题</a><time datetime="2023-06-16T03:29:52.000Z" title="Created 2023-06-16 03:29:52">2023-06-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/02/Windows%E7%8E%AF%E5%A2%83%E4%B8%8BCygwin%E7%9A%84%E9%85%8D%E7%BD%AE/" title="Windows环境下Cygwin的配置">Windows环境下Cygwin的配置</a><time datetime="2023-06-02T10:44:55.000Z" title="Created 2023-06-02 10:44:55">2023-06-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2021/11/12/Clion%E4%BD%BF%E7%94%A8WSL%E7%BC%96%E5%86%99C%E8%AF%AD%E8%A8%80%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB/" title="Clion使用WSL编写C语言问题汇总">Clion使用WSL编写C语言问题汇总</a><time datetime="2021-11-12T16:34:10.000Z" title="Created 2021-11-12 16:34:10">2021-11-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2021/11/12/Windows%E7%8E%AF%E5%A2%83Clion%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81%E6%9C%80%E5%AE%8C%E7%BE%8E%E6%96%B9%E6%A1%88/" title="Windows环境Clion中文乱码最完美方案">Windows环境Clion中文乱码最完美方案</a><time datetime="2021-11-12T11:14:41.000Z" title="Created 2021-11-12 11:14:41">2021-11-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Sonetto</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
