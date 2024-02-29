@@ -4,6 +4,56 @@
   
     
     <entry>
+      <title>迁移Hexo时遇到的问题</title>
+      <link href="/2024/02/29/%E8%BF%81%E7%A7%BBHexo%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/"/>
+      <url>/2024/02/29/%E8%BF%81%E7%A7%BBHexo%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+      
+        <content type="html"><![CDATA[<h2 id="需要迁移的相关文件"><a href="#需要迁移的相关文件" class="headerlink" title="需要迁移的相关文件"></a>需要迁移的相关文件</h2><p>在新机器上装好<code>hexo</code>后需要迁移的文件如下：</p><ol><li>博客配置文件<code>./_config.yml</code></li><li>主题配置文件夹<code>./theme/</code></li><li>文章及相关内容的文件夹<code>./source/</code></li><li>模板文件夹<code>./scaffolds/</code></li><li>记录博客所有的插件的文件<code>./package.json</code></li><li>如果做了主题的修改，在根目录下的主题<code>yml</code>文件也一起备份</li></ol><h2 id="在新电脑中重新部署"><a href="#在新电脑中重新部署" class="headerlink" title="在新电脑中重新部署"></a>在新电脑中重新部署</h2><p>还记得上一步中拷贝的<code>./package.json</code>嘛，只要在同一文件目录下运行</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure><p>就会自动读取<code>package.json</code>文件中记录的插件列表，然后挨个安装，这样你在旧设备中安装的插件，在新设备中，都安装好了</p><p>之后的一切就照常，修改文章，生成静态文件，部署到git</p><h2 id="安装hexo时npm不能在普通用户下执行的解决办法"><a href="#安装hexo时npm不能在普通用户下执行的解决办法" class="headerlink" title="安装hexo时npm不能在普通用户下执行的解决办法"></a>安装hexo时npm不能在普通用户下执行的解决办法</h2><p>最好的解决方案就时使用nvm:</p><p>[]: <a href="https://github.com/nvm-sh/nvm/blob/master/README.md#installation">https://github.com/nvm-sh/nvm/blob/master/README.md#installation</a></p><p>在linux上一条命令搞定nvm安装：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash</span><br><span class="line"><span class="comment">#curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.9/install.sh | bash</span></span><br></pre></td></tr></table></figure><p>或者</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash</span><br><span class="line"><span class="comment">#wget -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.9/install.sh | bash</span></span><br></pre></td></tr></table></figure><p>然后，安装node，注意：如果你已经安装了node，不用卸载旧的，直接安装就好，nvm会替你管理版本的：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvm install node</span><br></pre></td></tr></table></figure><p><strong>执行时如果有<code>nvm command not found</code>的问题</strong></p><p>进入<code>.nvm</code>文件夹，新建.<code>bash_profile</code>：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">touch</span> .bash_profile //新建文件</span><br><span class="line">open .bash_profile //打开文件</span><br></pre></td></tr></table></figure><p>在里面copy如下内容：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> NVM_DIR=<span class="string">&quot;<span class="variable">$HOME</span>/.nvm&quot;</span></span><br><span class="line">[ -s <span class="string">&quot;<span class="variable">$NVM_DIR</span>/nvm.sh&quot;</span> ] &amp;&amp; \. <span class="string">&quot;<span class="variable">$NVM_DIR</span>/nvm.sh&quot;</span> <span class="comment"># This loads nvm</span></span><br></pre></td></tr></table></figure><p>关闭文件，然后执行这个文件：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> .bash_profile</span><br></pre></td></tr></table></figure><p>执行完毕，我们再看看是否安装成功:</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvm --version</span><br></pre></td></tr></table></figure><p>输出：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#版本号</span></span><br><span class="line">0.33.8</span><br></pre></td></tr></table></figure><p>安装成功。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 折腾笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Hexo </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>OpenClash内核更新失败解决方法.md</title>
+      <link href="/2024/02/29/OpenClash%E5%86%85%E6%A0%B8%E6%9B%B4%E6%96%B0%E5%A4%B1%E8%B4%A5%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/"/>
+      <url>/2024/02/29/OpenClash%E5%86%85%E6%A0%B8%E6%9B%B4%E6%96%B0%E5%A4%B1%E8%B4%A5%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</url>
+      
+        <content type="html"><![CDATA[<h2 id="1-通过网络下载内核"><a href="#1-通过网络下载内核" class="headerlink" title="1. 通过网络下载内核"></a>1. 通过网络下载内核</h2><p>通过网络下载安装，使用此方法，在Dev内核发布页内查找对应的架构安装包，替换掉以下命令内的 <code>clash-linux-armv8.tar.gz</code> 内容，如：将 <code>clash-linux-armv8.tar.gz </code>替换为 <code>clash-linux-mips64.tar.gz</code>，依次运行以下命令即可，命令如下:</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 进入内核安装目录</span></span><br><span class="line"><span class="built_in">cd</span> /etc/openclash/core/ </span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载内核安装包</span></span><br><span class="line">wget https://github.com/vernesong/OpenClash/releases/download/Clash/clash-linux-armv8.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 解压内核安装包</span></span><br><span class="line">tar -zxvf clash-linux-armv8.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 给予最高权限</span></span><br><span class="line"><span class="built_in">chmod</span> 777 clash</span><br></pre></td></tr></table></figure><h2 id="2-通过手动下载内核"><a href="#2-通过手动下载内核" class="headerlink" title="2. 通过手动下载内核"></a>2. 通过手动下载内核</h2><p>无法通过 <strong>wget</strong> 下载或手动上传，可使用此方法，同样在Dev内核发布页内查找下载对应的架构安装包，将安装包通过 <strong>SFTP</strong> 上传到 <code>/etc/openclash/core/ </code>目录下，依次执行以下命令即可，命令如下：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 进入内核安装目录</span></span><br><span class="line"><span class="built_in">cd</span> /etc/openclash/core/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 解压内核安装包</span></span><br><span class="line">tar -zxvf clash-linux-armv8.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 给予最高权限</span></span><br><span class="line"><span class="built_in">chmod</span> 777 clash</span><br></pre></td></tr></table></figure><h2 id="3-最后说明"><a href="#3-最后说明" class="headerlink" title="3. 最后说明"></a>3. 最后说明</h2><p>安装完 Dev 内核后，可以配置代理网络节点，然后通过在<code>“openclash”&gt;“全局设置”&gt;“版本更新”</code>内更新内核，如你需要安装 TUN 内核，那么和以上方法一致，但需要将内核文件修改为 <code>clash_tun</code> 并给予 777 最高权限，以下列出 Dev 和 TUN 内核下载地址。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Dev 内核下载: https://github.com/vernesong/OpenClash/releases/tag/Clash</span><br><span class="line">Tun 内核下载: https://github.com/vernesong/OpenClash/releases/tag/TUN-Premium</span><br><span class="line">Tun 游戏内核: https://github.com/vernesong/OpenClash/releases/tag/TUN</span><br></pre></td></tr></table></figure><p>使用 TUN 模式单独下载 TUN 内核，路径 <code>/etc/openclash/core/clash_tun</code>，使用 TUN（游戏）模式就下载 TUN 游戏内核，路径 <code>/etc/openclash/core/clash_game</code>，<code>clash_tun 和 clash_game</code> 都为文件名，如使用此方法无法识别内核，可以尝试卸载 OpenClash 后重新安装依赖和插件</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 折腾笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> openwrt </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>解决proxmoxVE无法安装到eMMC上的问题</title>
       <link href="/2023/06/16/%E8%A7%A3%E5%86%B3ProxmoxVE%E6%97%A0%E6%B3%95%E5%AE%89%E8%A3%85%E5%88%B0eMMC%E4%B8%8A%E7%9A%84%E9%97%AE%E9%A2%98/"/>
       <url>/2023/06/16/%E8%A7%A3%E5%86%B3ProxmoxVE%E6%97%A0%E6%B3%95%E5%AE%89%E8%A3%85%E5%88%B0eMMC%E4%B8%8A%E7%9A%84%E9%97%AE%E9%A2%98/</url>
@@ -40,7 +90,7 @@
       
       <categories>
           
-          <category> 问题汇总 </category>
+          <category> 编程问题 </category>
           
       </categories>
       
@@ -67,7 +117,7 @@
       
       <categories>
           
-          <category> 问题汇总 </category>
+          <category> 编程问题 </category>
           
       </categories>
       
@@ -96,7 +146,7 @@
       
       <categories>
           
-          <category> 问题汇总 </category>
+          <category> 编程问题 </category>
           
       </categories>
       
